@@ -1,4 +1,11 @@
 import re
+from pyfiglet import Figlet
+from termcolor import colored
+
+f = Figlet(font='slant')
+print(colored(f.renderText('K e y-W a f f l e'), 'yellow'))
+print(f"\033[2;3m                                                             -by MD DILDAR MANDAL\033[0m")
+
 point=0
 fpoint=0
 
@@ -92,7 +99,8 @@ def lenCheck(password):
 def strengthCheck():
     
     global fpoint,point
-    password=input("Check password strength : ")
+    print(colored("Check password strength :",'blue',attrs=['bold']))
+    password=input("--> ")
 
     lenCheck(password)
     
@@ -103,20 +111,32 @@ def strengthCheck():
     average_threshold = 3
     good_threshold = 6
     strong_threshold = 8
-    
+    print("\n")
     # Check password strength based on total points
     if totalPoint <= very_weak_threshold:
-        print("Oh no! Your password is as secure as a house no door.")
+        print(colored("--> Oh no! Your password is as secure as a house no door.",'red'))
     elif totalPoint <= weak_threshold:
-        print("Your password is a bit like leaving your front door unlocked.")
+        print(colored("--> Your password is a bit like leaving your front door unlocked.",'yellow'))
     elif totalPoint <= average_threshold:
-        print("Try more!! Your password is like having a rope on your door.")
+        print(colored("--> Try more!! Your password is like having a rope on your door.",'yellow'))
     elif totalPoint <= good_threshold:
-        print("you can improve the password."+ "Total points: ")
+        print(colored("--> you can improve the password.",'yellow'))
     elif totalPoint < strong_threshold:
-        print("Nice ! Your password is like a fortress protecting your secrets.")
+        print(colored("--> Nice ! Your password is like a fortress protecting your secrets.",'green'))
     else:
-        print("Wow! Your password is like Fort Knox. You're a security superhero!")
-    print("Total points: ",totalPoint)
+        print(colored("--> Wow! Your password is like Fort Knox. You're a security superhero!",'green'))
+    print(colored("--> Total points: ",'yellow'),totalPoint)
     
-strengthCheck()
+
+while True:
+    strengthCheck()
+    user_input = input("\nDo you want to continue? (y/n): ").lower()
+    
+    if user_input == 'y':
+        print("Continuing...")
+        # Add your code here for the actions you want to perform.
+    elif user_input == 'n':
+        print("Exiting...")
+        break
+    else:
+        print("Invalid input. Please enter 'y' or 'n'.")
