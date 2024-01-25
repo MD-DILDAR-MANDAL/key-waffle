@@ -99,6 +99,8 @@ def lenCheck(password):
 def strengthCheck():
     
     global fpoint,point
+    fpoint=0
+    point=0
     print(colored("Check password strength :",'blue',attrs=['bold']))
     password=input("--> ")
 
