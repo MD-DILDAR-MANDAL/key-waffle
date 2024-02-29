@@ -24,6 +24,9 @@ This script uses a combination of length, character types (uppercase, lowercase,
 - Color-coded output for visual feedback
 - Option to continue checking passwords
 
+## Screenshot
+![demo](demo.png)
+
 ## Installation
 
 1. Clone the repository:
