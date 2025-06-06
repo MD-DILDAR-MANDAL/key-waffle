@@ -2,8 +2,7 @@
 #include <string>
 #include <regex>
 #include <algorithm>
-#include <thread>
-#include <chrono>
+#include <fstream>
 using namespace std;
 
 int point = 0;
@@ -113,11 +112,46 @@ void char_check(string str)
 			point--;
 	}
 }
+void open_check(string fileName, string str)
+{
+	ifstream in(fileName);
+
+	if (!in)
+	{
+		cout << "cannot open pfile to check leak password" << endl;
+		return;
+	}
+
+	string line;
+	int flag = 0;
+	while (getline(in, line))
+	{
+		if (str == line)
+		{
+			flag++;
+			break;
+		}
+	}
+	if (flag == 0)
+	{
+		fpoint++;
+	}
+	else
+		fpoint--;
+
+	in.close();
+}
+void leak_pass_check(string str)
+{
+	open_check("pfile1.txt", str);
+	open_check("pfile2.txt", str);
+}
 
 void check_pass_str(string str)
 {
 	len_check(str);
 	char_check(str);
+	leak_pass_check(str);
 }
 
 int main()
@@ -129,42 +163,48 @@ int main()
 	int strong_threshold = 8;
 	int totalPoint = 0;
 	char ch;
-	while(1){
+	while (1)
+	{
 		cout << "Check Password Strength" << endl;
 		string pass_str;
 		cin >> pass_str;
 		check_pass_str(pass_str);
 		totalPoint = point + fpoint;
-		
-		if (totalPoint <= very_weak_threshold){
-        	cout << "--> Oh no! Your password is as secure as a house no door." << endl;
+
+		if (totalPoint <= very_weak_threshold)
+		{
+			cout << "--> Oh no! Your password is as secure as a house no door." << endl;
 		}
-		else if(totalPoint <=weak_threshold){
-			cout << "--> Your password is a bit like leaving your front door unlocked."<<endl;
+		else if (totalPoint <= weak_threshold)
+		{
+			cout << "--> Your password is a bit like leaving your front door unlocked." << endl;
 		}
-		else if(totalPoint <=average_threshold){
-			cout << "--> Try more!! Your password is like having a rope on your door."<<endl;
+		else if (totalPoint <= average_threshold)
+		{
+			cout << "--> Try more!! Your password is like having a rope on your door." << endl;
 		}
-		else if(totalPoint <= good_threshold){
-			cout << "--> you can improve the password."<<endl;
+		else if (totalPoint <= good_threshold)
+		{
+			cout << "--> you can improve the password." << endl;
 		}
-		else if(totalPoint < strong_threshold){
-			cout << "--> Nice ! Your password is like a fortress protecting your secrets."<<endl;
+		else if (totalPoint < strong_threshold)
+		{
+			cout << "--> Nice ! Your password is like a fortress protecting your secrets." << endl;
 		}
-		else 
-		cout << "--> Wow! Your password is like Fort Knox. You're a security superhero!" << endl;
+		else
+			cout << "--> Wow! Your password is like Fort Knox. You're a security superhero!" << endl;
 		cout << "--> Total points:  " << totalPoint << endl;
 
 		cout << "Do you want to continue (y/n): " << endl;
 		cin >> ch;
 
-		if(ch == 'Y'||ch=='y'){
+		if (ch == 'Y' || ch == 'y')
+		{
 			cout << "continuing..." << endl;
-			std::this_thread::sleep_for(std::chrono::seconds(3));
 		}
-		else{
+		else
+		{
 			cout << "exiting...";
-			std::this_thread::sleep_for(std::chrono::seconds(3));
 			break;
 		}
 	}
